@@ -27,17 +27,17 @@ void L1SimpleTurnOn::beginJob() {
 
   evtCounter    =  fs->make<TH1F>("EventCounter","Event Counter",5,0.,5.);
 
-  JetPtL        =  fs->make<TH1F>( "JetPt"         , "p_{T} of leading Jets", nbins, xmin, xmax );
+  JetPtL        =  fs->make<TH1F>( "JetPtL"         , "p_{T} of leading Jets", nbins, xmin, xmax );
   JetPtL_Trig   =  fs->make<TH1F>( "JetPtL_Trig"   , "p_{T} of leading Jets -- Triggered" , nbins, xmin, xmax );
   JetPtL_L1Extra=  fs->make<TH1F>( "JetPtL_L1Extra", "p_{T} of leading Jets -- From L1Extra Emulation" , nbins, xmin, xmax );
 
   xmax=100.;
-  MuonPtL        =  fs->make<TH1F>( "MuonPt"         , "p_{T} of leading Muons", nbins, xmin, xmax );
+  MuonPtL        =  fs->make<TH1F>( "MuonPtL"         , "p_{T} of leading Muons", nbins, xmin, xmax );
   MuonPtL_Trig   =  fs->make<TH1F>( "MuonPtL_Trig"   , "p_{T} of leading Muons -- Triggered" , nbins, xmin, xmax );
   MuonPtL_L1Extra=  fs->make<TH1F>( "MuonPtL_L1Extra", "p_{T} of leading Muons -- From L1Extra Emulation" , nbins, xmin, xmax );
 
   xmax=100.;
-  ElectronPtL        =  fs->make<TH1F>( "ElectronPt"         , "p_{T} of leading Electrons", nbins, xmin, xmax );
+  ElectronPtL        =  fs->make<TH1F>( "ElectronPtL"         , "p_{T} of leading Electrons", nbins, xmin, xmax );
   ElectronPtL_Trig   =  fs->make<TH1F>( "ElectronPtL_Trig"   , "p_{T} of leading Electrons -- Triggered" , nbins, xmin, xmax );
   ElectronPtL_L1Extra=  fs->make<TH1F>( "ElectronPtL_L1Extra", "p_{T} of leading Electrons -- From L1Extra Emulation" , nbins, xmin, xmax );
 }
