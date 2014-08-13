@@ -124,6 +124,10 @@ void plotL1EmuLeaf(){
   TString cutString=myHists.getCutString();
 
   _tree->Project(hname,varString,cutString); // fill the histogram
+  int nent=_tree->GetEntries();
+  cout << "Number of events on tree: " << nent << endl;
+  TH1F *h_nent = new TH1F("Nentries","Number of Events processed",1,0.0,1.);
+  h_nent->SetBinContent(1,nent);
 
   TCanvas *c1= new TCanvas("c1","Root Canvas 1");
   c1->SetLogy(true);
@@ -136,6 +140,7 @@ void plotL1EmuLeaf(){
     TString OutFile="l1Emulator_" + Var + ".root";
     TFile *of = new TFile(OutFile,"RECREATE");
     h->Write();
+    h_nent->Write();
     of->Close();
   }
 
