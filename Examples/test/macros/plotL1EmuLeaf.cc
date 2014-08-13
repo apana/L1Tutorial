@@ -131,8 +131,14 @@ void plotL1EmuLeaf(){
   h->Rebin(rebin);
   h->Draw();
 
+  bool SaveOutput=false;
+  if (SaveOutput){
+    TString OutFile="l1Emulator_" + Var + ".root";
+    TFile *of = new TFile(OutFile,"RECREATE");
+    h->Write();
+    of->Close();
+  }
 
-
- //gROOT->Reset();
+  //gROOT->Reset();
 
 }
