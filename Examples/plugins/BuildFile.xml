@@ -15,8 +15,10 @@
                               <use name="DataFormats/PatCandidates"/>
                                 <use name="DataFormats/TauReco"/>
                                   <use name="DataFormats/JetReco"/>
-                                    <use name="CondFormats/DataRecord"/>
-                                      <use name="boost"/>
-                                        <use name="FWCore/Utilities"/>
-                                        </library>
+                                    <use name="DataFormats/MuonReco"/>
+				     <use name="DataFormats/MuonData"/>
+                                      <use name="CondFormats/DataRecord"/>
+                                        <use name="boost"/>
+                                          <use name="FWCore/Utilities"/>
+                                         </library>
 

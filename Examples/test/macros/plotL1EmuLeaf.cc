@@ -1,3 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////////////
+//
+//  Simple L1 Emulator plotting macro
+//
+///////////////////////////////////////////////////////////////////////////////////////
+
+TString rootname = "../../../../L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
+
+TString Var; // Which Distribution to plot
+
+Var        = "IsolatedEG";
+// Var        = "RelaxedEG";
+// Var        = "Tau";
+// Var        = "Jet";
+// Var        = "MET";
+// Var        = "MHT";
+// Var        = "SET";
+// Var        = "SHT";
+
+
 class SetupHistos
 {
 public:
@@ -86,19 +106,8 @@ void plotL1EmuLeaf(){
   gStyle->SetOptStat(1);
   TH1::SetDefaultSumw2();
 
-  TString rootname = "L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
   TFile *rootfile = new TFile(rootname);if (!rootfile) return;
   //rootfile->GetListOfKeys()->Print();
-
-  TString Var;
-  // Var        = "IsolatedEG";
-  // Var        = "RelaxedEG";
-  // Var        = "Tau";
-  // Var        = "Jet";
-  Var        = "MET";
-  // Var        = "MHT";
-  // Var        = "SET";
-  // Var        = "SHT";
 
   TTree *_tree = dynamic_cast<TTree*>(rootfile->Get("Events"));
   if (!_tree) {

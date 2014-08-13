@@ -6,8 +6,14 @@ L1SimpleTurnOn::L1SimpleTurnOn( const ParameterSet & cfg ) {
   cout << " Beginning L1SimpleTurnOn Job " << endl;
   l1GtRecordInputTag      = cfg.getParameter<InputTag>( "L1GtRecordInputTag" );
   PFJetAlgorithm          = cfg.getParameter<InputTag>( "PFJetAlgorithm"  );
+  muonCollection          = cfg.getParameter<InputTag>( "muons"  );
+  electronCollection      = cfg.getParameter<InputTag>( "electrons"  );
   l1JetTriggerBitName     = cfg.getParameter<string> ("L1JetTriggerBitName");
+  l1MuonTriggerBitName    = cfg.getParameter<string> ("L1MuonTriggerBitName");
+  l1EGTriggerBitName      = cfg.getParameter<string> ("L1EGTriggerBitName");
   JetThreshold            = cfg.getParameter<double> ("L1JetThresholdForL1Extra");
+  MuonThreshold           = cfg.getParameter<double> ("L1MuonThresholdForL1Extra");
+  EGThreshold             = cfg.getParameter<double> ("L1EGThresholdForL1Extra");
   l1CollectionsTag_       = cfg.getParameter< InputTag > ("l1collections");
 
   errCnt=0;
@@ -20,42 +26,75 @@ void L1SimpleTurnOn::beginJob() {
   Double_t xmin=0.,xmax=250.;
 
   evtCounter    =  fs->make<TH1F>("EventCounter","Event Counter",5,0.,5.);
-  JetPtL        =  fs->make<TH1F>( "JetPt"         , "p_{T} of leading PFJets", nbins, xmin, xmax );
-  JetPtL_Trig   =  fs->make<TH1F>( "JetPtL_Trig"   , "p_{T} of leading PFJets -- Triggered" , nbins, xmin, xmax );
-  JetPtL_L1Extra=  fs->make<TH1F>( "JetPtL_L1Extra", "p_{T} of leading PFJets -- From L1Extra Emulation" , nbins, xmin, xmax );
+
+  JetPtL        =  fs->make<TH1F>( "JetPt"         , "p_{T} of leading Jets", nbins, xmin, xmax );
+  JetPtL_Trig   =  fs->make<TH1F>( "JetPtL_Trig"   , "p_{T} of leading Jets -- Triggered" , nbins, xmin, xmax );
+  JetPtL_L1Extra=  fs->make<TH1F>( "JetPtL_L1Extra", "p_{T} of leading Jets -- From L1Extra Emulation" , nbins, xmin, xmax );
+
+  xmax=100.;
+  MuonPtL        =  fs->make<TH1F>( "MuonPt"         , "p_{T} of leading Muons", nbins, xmin, xmax );
+  MuonPtL_Trig   =  fs->make<TH1F>( "MuonPtL_Trig"   , "p_{T} of leading Muons -- Triggered" , nbins, xmin, xmax );
+  MuonPtL_L1Extra=  fs->make<TH1F>( "MuonPtL_L1Extra", "p_{T} of leading Muons -- From L1Extra Emulation" , nbins, xmin, xmax );
+
+  xmax=100.;
+  ElectronPtL        =  fs->make<TH1F>( "ElectronPt"         , "p_{T} of leading Electrons", nbins, xmin, xmax );
+  ElectronPtL_Trig   =  fs->make<TH1F>( "ElectronPtL_Trig"   , "p_{T} of leading Electrons -- Triggered" , nbins, xmin, xmax );
+  ElectronPtL_L1Extra=  fs->make<TH1F>( "ElectronPtL_L1Extra", "p_{T} of leading Electrons -- From L1Extra Emulation" , nbins, xmin, xmax );
 }
 
 void L1SimpleTurnOn::analyze( const Event& evt, const EventSetup& es ) {
 
   string errMsg("");
-  doL1Jets=true; doPFJets=true;
+  doL1Jets=true; doL1Muons=true; doL1IsoEG=true; doL1NonIsoEG=true;
+  doPFJets=true; doMuons=true; doElectrons=true; 
 
   //Get the collections
   Handle<PFJetCollection> pfJets, pfJetsDummy;
   Handle<l1extra::L1JetParticleCollection> l1CenJets,l1ForJets,l1TauJets,l1jetsDummy;
+  Handle<l1extra::L1MuonParticleCollection> l1Muons,l1MuonsDummy;
+  Handle<l1extra::L1EmParticleCollection> l1IsoEG,l1NonIsoEG,l1EGDummy ;
+  Handle<reco::GsfElectronCollection>        electrons, electDummy;
+  Handle<MuonCollection> muons,muonDummy;
 
+  evt.getByLabel(muonCollection,muons);
+  if (!muons.isValid())   { errMsg=errMsg + "  -- No muons";  muons   = muonDummy  ; doMuons   =false;}
+  evt.getByLabel(electronCollection,electrons);
+  if (!electrons.isValid())   { errMsg=errMsg + "  -- No electrons";  electrons   = electDummy  ; doElectrons   =false;}
   evt.getByLabel( PFJetAlgorithm,  pfJets );
   if (!pfJets.isValid())   { errMsg=errMsg + "  -- No PFJets";  pfJets   = pfJetsDummy  ; doPFJets   =false;}
 
   InputTag L1CenJetTag(edm::InputTag(l1CollectionsTag_.label(),"Central"));
-  //InputTag L1CenJetTag(edm::InputTag(l1CollectionsTag_.label(),"cenJets"));
   evt.getByLabel(L1CenJetTag,l1CenJets);
   if (! l1CenJets.isValid()) { errMsg=errMsg + "  -- No L1Jets with name: " + L1CenJetTag.label() ;
     l1CenJets = l1jetsDummy; doL1Jets=false;}
 
   InputTag L1ForJetTag(edm::InputTag(l1CollectionsTag_.label(),"Forward"));
-  //InputTag L1ForJetTag(edm::InputTag(l1CollectionsTag_.label(),"forJets"));
   evt.getByLabel(L1ForJetTag,l1ForJets);
   if (! l1ForJets.isValid()) { errMsg=errMsg + "  -- No L1Jets with name: " + L1ForJetTag.label() ;
     l1ForJets = l1jetsDummy; doL1Jets=false;}
 
   InputTag L1TauJetTag(edm::InputTag(l1CollectionsTag_.label(),"Tau"));
-  //InputTag L1TauJetTag(edm::InputTag(l1CollectionsTag_.label(),"tauJets"));
   evt.getByLabel(L1TauJetTag,l1TauJets);
   if (! l1TauJets.isValid()) { errMsg=errMsg + "  -- No L1Jets with name: " + L1TauJetTag.label() ;
     l1TauJets = l1jetsDummy; doL1Jets=false;}
 
+  InputTag L1MuonTag(edm::InputTag(l1CollectionsTag_.label(),""));
+  evt.getByLabel(L1MuonTag,l1Muons);
+  if (! l1Muons.isValid()) { errMsg=errMsg + "  -- No L1Muons found " ;
+    l1Muons = l1MuonsDummy; doL1Muons=false;}
+
+  InputTag L1IsoEGTag(edm::InputTag(l1CollectionsTag_.label(),"Isolated"));
+  evt.getByLabel(L1IsoEGTag,l1IsoEG);
+  if (! l1IsoEG.isValid()) { errMsg=errMsg + "  -- No L1IsoEGctrons found " ;
+    l1IsoEG = l1EGDummy; doL1IsoEG=false;}
+
+  InputTag L1NonIsoEGTag(edm::InputTag(l1CollectionsTag_.label(),"NonIsolated"));
+  evt.getByLabel(L1NonIsoEGTag,l1NonIsoEG);
+  if (! l1NonIsoEG.isValid()) { errMsg=errMsg + "  -- No L1NonIsoEGctrons found " ;
+    l1NonIsoEG = l1EGDummy; doL1NonIsoEG=false;}
+
   // Get L1 GT info
+
   bool gotL1=true;
   evtCounter->Fill(0.);
 
@@ -81,6 +120,8 @@ void L1SimpleTurnOn::analyze( const Event& evt, const EventSetup& es ) {
     evtCounter->Fill(1.);
     getL1Results(*gtRecord.product(), *menuRcd.product());
     if (doL1Jets) L1JetAnalysis(*pfJets,*l1CenJets,*l1ForJets,*l1TauJets,checkTriggerBit(l1JetTriggerBitName),JetThreshold);
+    if (doL1Muons) L1MuonAnalysis(*muons,*l1Muons,checkTriggerBit(l1MuonTriggerBitName),MuonThreshold);
+    if (doL1IsoEG and doL1NonIsoEG) L1EGAnalysis(*electrons,*l1NonIsoEG,*l1IsoEG,checkTriggerBit(l1EGTriggerBitName),EGThreshold);
   }
 
   if ((errMsg != "") && (errCnt < errMax())){
@@ -129,6 +170,57 @@ void L1SimpleTurnOn::L1JetAnalysis(const reco::PFJetCollection& pfJets,
       if (trigFired)    JetPtL_Trig ->Fill( pf->pt() );
       if (l1ExtraFired) JetPtL_L1Extra ->Fill( pf->pt() );
     }
+  }
+
+}
+
+
+void L1SimpleTurnOn::L1MuonAnalysis(const MuonCollection& muons,
+				   const l1extra::L1MuonParticleCollection& l1Muons,
+				   const bool trigFired,
+				   const double threshold
+				   ) {
+
+  // try to emulate the muon bits from the L1Extra objects
+  double maxL1=0.;
+  if (l1Muons.size()>0) maxL1=l1Muons.at(0).pt();
+
+  bool l1ExtraFired = false;
+  if (maxL1>=threshold) l1ExtraFired=true;
+  //############################################################
+
+
+  if (doMuons && muons.size()>0){
+    MuonCollection::const_iterator mu = muons.begin();
+      MuonPtL->Fill( mu->pt() );
+      if (trigFired)    MuonPtL_Trig ->Fill( mu->pt() );
+      if (l1ExtraFired) MuonPtL_L1Extra ->Fill( mu->pt() );
+  }
+
+}
+
+void L1SimpleTurnOn::L1EGAnalysis( const reco::GsfElectronCollection& electrons,
+				   const l1extra::L1EmParticleCollection& l1NonIsoEG,
+				   const l1extra::L1EmParticleCollection& l1IsoEG,
+				   const bool trigFired,
+				   const double threshold
+				   ) {
+
+  // try to emulate the muon bits from the L1Extra objects
+  double maxL1NonIso=0., maxL1Iso=0.;
+  if (l1NonIsoEG.size()>0) maxL1NonIso=l1NonIsoEG.at(0).pt();
+  if (l1IsoEG.size()>0)    maxL1Iso=l1IsoEG.at(0).pt();
+  
+  bool l1ExtraFired = false;
+  if (maxL1NonIso>=threshold || maxL1Iso>=threshold) l1ExtraFired=true;
+  //############################################################
+  
+  
+  if (doElectrons && electrons.size()>0){
+    reco::GsfElectronCollection::const_iterator ele = electrons.begin();
+      ElectronPtL->Fill( ele->pt() );
+      if (trigFired)    ElectronPtL_Trig ->Fill( ele->pt() );
+      if (l1ExtraFired) ElectronPtL_L1Extra ->Fill( ele->pt() );
   }
 
 }

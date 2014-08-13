@@ -20,8 +20,20 @@
 #include "DataFormats/JetReco/interface/PFJetCollection.h"
 #include "DataFormats/JetReco/interface/PFJet.h"
 
+#include "DataFormats/MuonReco/interface/Muon.h"
+#include "DataFormats/MuonReco/interface/MuonFwd.h"
+
+#include "DataFormats/EgammaCandidates/interface/Electron.h"
+#include "DataFormats/EgammaCandidates/interface/ElectronFwd.h"
+#include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
+
 #include "DataFormats/L1Trigger/interface/L1JetParticle.h"
 #include "DataFormats/L1Trigger/interface/L1JetParticleFwd.h"
+#include "DataFormats/L1Trigger/interface/L1MuonParticle.h"
+#include "DataFormats/L1Trigger/interface/L1MuonParticleFwd.h"
+#include "DataFormats/L1Trigger/interface/L1EmParticle.h"
+#include "DataFormats/L1Trigger/interface/L1EmParticleFwd.h"
+
 
 #include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
 #include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
@@ -59,17 +71,32 @@ private:
 		     const double threshold
 		     );
 
+  void L1MuonAnalysis(const MuonCollection&,
+		     const l1extra::L1MuonParticleCollection&,
+		     const bool trigFired,
+		     const double threshold
+		     );
+
+  void L1EGAnalysis(const reco::GsfElectronCollection&,
+		     const l1extra::L1EmParticleCollection&,
+		     const l1extra::L1EmParticleCollection&,
+		     const bool trigFired,
+		     const double threshold
+		     );
+
 
 
   // input parameters
-  edm::InputTag PFJetAlgorithm, l1CollectionsTag_,l1GtRecordInputTag;
-  string l1JetTriggerBitName;
-  double JetThreshold;
+  edm::InputTag PFJetAlgorithm, muonCollection, electronCollection, l1CollectionsTag_,l1GtRecordInputTag;
+  string l1JetTriggerBitName,l1MuonTriggerBitName,l1EGTriggerBitName;
+  double JetThreshold,MuonThreshold,EGThreshold;
 
   // histograms
   edm::Service<TFileService> fs;
   TH1F *evtCounter;
   TH1F *JetPtL, *JetPtL_Trig, *JetPtL_L1Extra;
+  TH1F *MuonPtL, *MuonPtL_Trig, *MuonPtL_L1Extra;
+  TH1F *ElectronPtL, *ElectronPtL_Trig, *ElectronPtL_L1Extra;
 
   int errCnt;
   bool initL1;
@@ -82,8 +109,8 @@ private:
 		    const L1GtTriggerMenu&
 		  );
   bool checkTriggerBit(const string Name);
-  bool doPFJets;
-  bool doL1Jets;
+  bool doPFJets, doMuons, doElectrons;
+  bool doL1Jets,doL1Muons,doL1IsoEG,doL1NonIsoEG;
 
 
   // variables for storing results from running the GT menu
