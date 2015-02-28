@@ -4,7 +4,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////
 
-TString rootname = "../../../../L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
+//TString rootname = "../../../../L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
+TString rootname = "../L1Emulator_Stage1_PP.root";
 
 TString Var; // Which Distribution to plot
 
@@ -39,9 +40,9 @@ public:
       rebin_=4;
       theObject_="l1tEGammaBXVector";
       if (Distribution == "RelaxedEG"){
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.hwIso()==0";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.hwIso()==0";
       }else{
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.hwIso()==1";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.hwIso()==1";
       }
     } else if ( Distribution == "MET" || Distribution == "MHT" || Distribution == "SET" || Distribution == "SHT"){ 
       theObject_="l1tEtSumBXVector";
@@ -49,16 +50,16 @@ public:
       rebin_=5;
       if (Distribution == "MET"){
 	xmax_=460;
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.type_==2";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.type_==2";
       }else if (Distribution == "MHT") {
 	xmax_=460;
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.type_==3";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.type_==3";
       }else if ( Distribution == "SET"){
 	xmax_=1200;
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.type_==0";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.type_==0";
       }else if (Distribution == "SHT"){ 
 	xmax_=1200;
-	cutString_=theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.type_==1";
+	cutString_=theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.type_==1";
       }
     } else if ( Distribution == "Jet"){ 
       xmax_=300;
@@ -67,7 +68,7 @@ public:
       theObject_="l1tJetBXVector";
     }
 
-    varString_= theObject_ + "_caloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.et()";
+    varString_= theObject_ + "_simCaloStage1FinalDigis__L1TEMULATION.obj.data_.l1t::L1Candidate.et()";
 
 
     hname_= Distribution + "_L1Emu";
