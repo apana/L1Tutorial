@@ -36,6 +36,7 @@ void L1SimpleTurnOn::beginJob() {
   MuonPtL_Trig   =  fs->make<TH1F>( "MuonPtL_Trig"   , "p_{T} of leading Muons -- Triggered" , nbins, xmin, xmax );
   MuonPtL_L1Extra=  fs->make<TH1F>( "MuonPtL_L1Extra", "p_{T} of leading Muons -- From L1Extra Emulation" , nbins, xmin, xmax );
 
+  nbins=20;
   xmax=100.;
   ElectronPtL        =  fs->make<TH1F>( "ElectronPtL"         , "p_{T} of leading Electrons", nbins, xmin, xmax );
   ElectronPtL_Trig   =  fs->make<TH1F>( "ElectronPtL_Trig"   , "p_{T} of leading Electrons -- Triggered" , nbins, xmin, xmax );

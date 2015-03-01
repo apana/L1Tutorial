@@ -9,8 +9,8 @@ TString rootname = "../L1Emulator_Stage1_PP.root";
 
 TString Var; // Which Distribution to plot
 
-Var        = "IsolatedEG";
-// Var        = "RelaxedEG";
+// Var        = "IsolatedEG";
+Var        = "RelaxedEG";
 // Var        = "Tau";
 // Var        = "Jet";
 // Var        = "MET";

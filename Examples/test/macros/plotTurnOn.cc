@@ -10,19 +10,26 @@ void plotTurnOn(){
   TString rootname = "../l1SimpleTurnOns.root";
   TFile *rootfile = new TFile(rootname);if (!rootfile) return;
 
-  TString Den="ElectronPtL";
-  TString Num1="ElectronPtL_Trig";
-  TString Num2="ElectronPtL_L1Extra";
+  TString Object = "Jet";
+  // TString Object = "Muon";
+  // TString Object = "Electron";
+
+  TString Den= Object + "PtL";
+  TString Num1=Object + "PtL_Trig";
+  TString Num2=Object + "PtL_L1Extra";
 
   TH1F *h_Den = (TH1F*)rootfile->FindObjectAny(Den);
   TH1F *h_Num1 = (TH1F*)rootfile->FindObjectAny(Num1);
   TH1F *h_Num2 = (TH1F*)rootfile->FindObjectAny(Num2);
 
   h_Den->Sumw2(); h_Num1->Sumw2(); ; h_Num2->Sumw2(); 
-  h_Den->Draw();
-
   h_Num1->SetLineColor(kBlue); h_Num1->SetMarkerColor(kBlue);
   h_Num2->SetLineColor(kRed);  h_Num2->SetMarkerColor(kRed);
+
+  TCanvas *c1 = new TCanvas("pT", "pT", 20,20,540,550);
+  h_Den->Draw();
+  h_Num1->Draw("same");
+  h_Num2->Draw("same");
   
   TH1F *h_Rat1= h_Num1->Clone(); 
   h_Rat1->SetName("TurnON_Trig");
@@ -33,8 +40,8 @@ void plotTurnOn(){
   h_Rat2->Divide(h_Num2,h_Den,1.,1.,"B");
   
   char cname[200];
-  sprintf(cname, "c_All");
-  TCanvas *cAll = new TCanvas(cname, cname, 500, 500);
+  sprintf(cname, "TurnOn");
+  TCanvas *cAll = new TCanvas(cname, cname, 660,20,540,550);
   
   h_Rat1->Draw();
   h_Rat1->Draw("e,same");
