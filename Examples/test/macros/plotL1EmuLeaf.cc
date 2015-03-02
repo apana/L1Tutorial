@@ -4,15 +4,15 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////
 
-//TString rootname = "../../../../L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
+//TString rootname = "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/Neutrino/results/L1Emulator_Stage1_PP_Neutrino_Pt-2to20_gun_PU40bx25_POSTLS162_V2-v1.root";
 TString rootname = "../L1Emulator_Stage1_PP_plusRECO_TTbar.root";
 
 TString Var; // Which Distribution to plot
 
 // Var        = "IsolatedEG";
-Var        = "RelaxedEG";
+// Var        = "RelaxedEG";
 // Var        = "Tau";
-// Var        = "Jet";
+Var        = "Jet";
 // Var        = "MET";
 // Var        = "MHT";
 // Var        = "SET";
@@ -115,7 +115,7 @@ void plotL1EmuLeaf(){
   gStyle->SetOptStat(1);
   TH1::SetDefaultSumw2();
 
-  TFile *rootfile = new TFile(rootname);if (!rootfile) return;
+  TFile *rootfile = TFile::Open(rootname);if (!rootfile) return;
   //rootfile->GetListOfKeys()->Print();
 
   TTree *_tree = dynamic_cast<TTree*>(rootfile->Get("Events"));
