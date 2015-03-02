@@ -4,26 +4,62 @@ process= cms.Process('L1TEMULATION')
 
 ######## User options ############################################## 
 
-nevts=-100
+nevts=1000
 
-OutputFile= "L1Emulator_Stage1_PP_plusRECO.root"
+OutputFile= "L1Emulator_Stage1_PP_plusRECO_TTbar.root"
+## OutputFile= "L1Emulator_Stage1_PP_plusRECO_WToENu.root"
 
-# GLOBALTAG = 'MCRUN2_73_V7'
-# GLOBALTAG = 'PRE_LS172_V15::ALL'
 # inputfile=["file:/uscmst1b_scratch/lpc1/lpctrig/apana/L1Upgrade/RelValTTBar_PU_PRE_LS172_V15_IdTestFullSim-v1_327A4C34-8571-E411-A632-68B59972BFCE.root"]
-inputfile=[
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_1_1_nZA.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_2_1_bq4.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_3_1_Z1v.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_4_1_KTB.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_5_1_gFl.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_6_1_dv4.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_7_1_eBe.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_8_1_ATz.root",
-    "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_9_1_teD.root"
-           ]
-# inputfile=["/store/relval/CMSSW_7_3_0/RelValTTbar_13/GEN-SIM-DIGI-RAW-HLTDEBUG/PU25ns_MCRUN2_73_V7-v1/00000/0496C828-4981-E411-8142-0025905A60B8.root"]
 # inputfile=["file:0496C828-4981-E411-8142-0025905A60B8_justRAW.root"]
+
+## lxplus
+inputfile=[
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_1_1_nZA.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_2_1_bq4.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_3_1_Z1v.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_4_1_KTB.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_5_1_gFl.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_6_1_dv4.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_7_1_eBe.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_8_1_ATz.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_9_1_teD.root",
+    "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/TTBar/RelValTTbar_13_PU25ns_RAWplusRECO_10_1_WCN.root"
+]
+
+## inputfile=[
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_1_1_Nne.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_2_1_5MZ.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_3_1_T7R.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_4_1_9jm.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_5_1_0M6.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_6_1_V6t.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_7_1_ZpW.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_8_1_V1U.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_9_1_RpG.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_10_1_3fQ.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_11_1_idZ.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_12_1_koM.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_13_1_8YW.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_14_1_2su.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_15_1_GaB.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_16_1_AUs.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_17_1_eAj.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_19_1_PMm.root",
+##     "root://eoscms//eos/cms/store/caf/user/apana/L1Tutorial/WToENu/WToENu_Phys14DR-AVE20BX25_RAWplusRECO_21_1_TNv.root",
+## ]
+
+## cmslpc
+## inputfile=[
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_1_1_nZA.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_2_1_bq4.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_3_1_Z1v.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_4_1_KTB.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_5_1_gFl.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_6_1_dv4.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_7_1_eBe.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_8_1_ATz.root",
+##     "file:/eos/uscms/store/user/lpctrig/apana/HATS/L1Emulator_plusRECO_9_1_teD.root"
+##            ]
 
 ## rawDataLabel="source"  ## DATA
 rawDataLabel="rawDataCollector"  ## MC
@@ -50,7 +86,7 @@ process.options = cms.untracked.PSet(
     )
 
 process.load('FWCore/MessageService/MessageLogger_cfi')
-process.MessageLogger.cerr.FwkReport.reportEvery = 1
+process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.MessageLogger.categories.append('L1GtTrigReport')
 
 ### Input source ###################################################
@@ -131,7 +167,6 @@ process.out = cms.OutputModule("PoolOutputModule",
                                            'keep L1GlobalTrigger*_*_*_*',
                                            'keep l1extra*_*_*_L1TEMULATION',
                                            'keep *BXVector_*_*_L1TEMULATION',
-                                           # 'keep *_*_*_L1TEMULATION',
                                            'keep recoPFJets_ak4PFJetsCHS__RECO',
                                            'keep recoMuons_muons__RECO',
                                            'keep recoGsfElectrons_gedGsfElectrons__RECO'
@@ -146,7 +181,6 @@ process.RawToDigi.remove(process.caloStage1Digis)
 process.RawToDigi.remove(process.caloStage1LegacyFormatDigis)
 
 process.schedule = cms.Schedule( process.raw2digi_step,
-                                 # process.muonTP,
                                  process.reRunHCALTP,
                                  process.L1simulation_step,
                                  process.L1ExtraAndReport,

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 //TString rootname = "../../../../L1Trigger/L1TCalorimeter/test/SimL1Emulator_Stage1_PP.root";
-TString rootname = "../L1Emulator_Stage1_PP.root";
+TString rootname = "../L1Emulator_Stage1_PP_plusRECO_TTbar.root";
 
 TString Var; // Which Distribution to plot
 
@@ -100,6 +100,14 @@ private:
 };
 
 void plotL1EmuLeaf(){
+
+  TString makeshared(gSystem->GetMakeSharedLib());
+  TString dummy = makeshared.ReplaceAll("-W ", "");
+  gSystem->SetMakeSharedLib(makeshared);
+  TString dummy = makeshared.ReplaceAll("-Wshadow ", "-std=c++0x ");
+  gSystem->SetMakeSharedLib(makeshared);
+  gSystem->Load("libFWCoreFWLite");
+  AutoLibraryLoader::enable();
 
   gROOT->LoadMacro("tdrstyle.C");
   setTDRStyle();
