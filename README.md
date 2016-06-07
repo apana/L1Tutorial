@@ -1,7 +1,13 @@
 L1Tutorial
 ==========
 
-#### L1Menu DPG package for menu-making
+### Setup CMSSW project area
+setenv SCRAM_ARCH slc6_amd64_gcc530
+cmsrel CMSSW_8_0_8
+cd CMSSW_8_0_8/src
+cmsenv
+
+### L1Menu DPG package for menu-making
 <pre><code>
 git clone -b 2016-Tune https://github.com/cms-l1-dpg/L1Menu.git L1TriggerDPG/L1Menu
 cd L1TriggerDPG/L1Menu
@@ -10,8 +16,9 @@ cd macros
 make -j 9
 </code></pre>
 
-#### HATS L1 Tutorial
+### HATS L1 Tutorial
 <pre><code>
+cd $CMSSSW_BASE/src
 git clone git@github.com:apana/L1HATS.git
 cd L1HATS/L1HATSexercise/macros
 make
